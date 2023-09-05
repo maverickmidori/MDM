@@ -2,7 +2,7 @@
 ################## { L O G G I N G } ##################
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 ################## { V A R I A B L E S } ##################
-User=$(/usr/bin/id -un)
+User=$(/usr/bin/who | /usr/bin/grep "console" | /usr/bin/cut -d" " -f1)
 DLPath="/Users/$User/Downloads/"
 files=$(/bin/ls -1 $DLPath | /usr/bin/grep "\(forms\|frmservlet\).*\.jnlp")
 oldfiles=$(/usr/bin/find $DLPath -type f -mmin +3 | /usr/bin/grep  "\(forms\|frmservlet\).*\.jnlp")
