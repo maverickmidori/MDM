@@ -8,6 +8,7 @@ files=$(/bin/ls -1 $DLPath | /usr/bin/grep "\(forms\|frmservlet\).*\.jnlp")
 oldfiles=$(/usr/bin/find $DLPath -type f -mmin +3 | /usr/bin/grep  "\(forms\|frmservlet\).*\.jnlp")
 validfile=$(/usr/bin/find $DLPath -type f -mmin -3 | /usr/bin/grep  "\(forms\|frmservlet\).*\.jnlp" | sort -r | head -n 1)
 forms="https://forms.connect.avondale.edu.au"
+uid=$(id -u "$User")
 ################## { F U N C T I O N S } ##################
 function UnlockJNLP() {
     files=$(/bin/ls -1 $DLPath | /usr/bin/grep "\(forms\|frmservlet\).*\.jnlp")
@@ -40,7 +41,7 @@ function DelOldFiles() {
     sleep 2
     done }
 function Main() { DelOldFiles ; UnlockJNLP ; OpenJNLP ; DelOpenJNLP ; }
-function DownloadJNLP() { open "$forms" ; sleep 3 ; }
+function DownloadJNLP() { launchctl asuser "$uid" sudo -u "$User" open $forms ; sleep 3 ; }
 function OpenJNLP() { validfile=$(/usr/bin/find $DLPath -type f -mmin -3 | /usr/bin/grep  "\(forms\|frmservlet\).*\.jnlp" | sort -r | head -n 1) ; sleep 2 ; javaws "$validfile" ;}
 function  DelOpenJNLP() { sleep 180 ; rm -rf "$validfile" ; }
 ################## { P R E - F L I G H T } ##################
