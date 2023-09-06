@@ -43,7 +43,7 @@ function DelOldFiles() {
 function Main() { DelOldFiles ; UnlockJNLP ; OpenJNLP ; DelOpenJNLP ; }
 function DownloadJNLP() { launchctl asuser "$uid" sudo -u "$User" open $forms ; sleep 3 ; }
 function OpenJNLP() { validfile=$(/usr/bin/find $DLPath -type f -mmin -3 | /usr/bin/grep  "\(forms\|frmservlet\).*\.jnlp" | sort -r | head -n 1) ; sleep 2 ; launchctl asuser "$uid" sudo -u "$User" javaws "$validfile" ;}
-function  DelOpenJNLP() { sleep 180 ; rm -rf "$validfile" ; }
+function  DelOpenJNLP() { sleep 60 ; rm -rf "$validfile" ; echo "[I] INFO: Removed $validfile" ; }
 ################## { P R E - F L I G H T } ##################
 if [ -d $DLPath ] ; 
     then cd $DLPath && echo "[I] INFO: User Downloads Directory Exists. Proceeding..."
