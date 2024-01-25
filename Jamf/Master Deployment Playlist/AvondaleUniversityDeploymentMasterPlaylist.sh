@@ -59,26 +59,10 @@ SystemSetup syssetup[@]
 policyID=(
 # Set Asset Tag
 72
-# Set Avondale Wallpaper
-62
-# Install Rosetta2
-66
-# Unlock Preference Panes
-69
-# Install Microsoft Edge
-29
-# Install Zoom
-64
 # Install Defender
 108
 # Install Jamf Connect
 118
-# Install Microsoft Teams
-42
-# Installing TeamViewer
-109
-# Install Adobe Acrobat Reader DC
-32
 )
 function JamfPolicies() {
     declare -a policyID=("${!1}")
@@ -118,6 +102,8 @@ function CloseApp() {
         fi
     done
 }
+chflags hidden /Applications/private
+chflags hidden /Applications/Library/
 # Invoke Function CloseApp with Array appName
 CloseApp appName[@]
 # Close Jamf Connect Windows (Not Working Currently)
@@ -125,6 +111,7 @@ CloseApp appName[@]
 #    with timeout of 5 seconds
 #    end timeout'
 ### Announce Completion ###
+osascript -e "display dialog\"Avondale University - Standard Operating Environment Successfully Installed"\"
 osascript -e "set Volume 5"
 say "Provisioning Complete"
 echo "Script Complete"
